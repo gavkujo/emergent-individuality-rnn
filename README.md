@@ -85,9 +85,11 @@ python src/experiments/figures.py
 ## Citation
 
 ```
-@misc{emergent-individuality-2026,
-  title  = {Emergent Individuality in Neural Networks via Persistent Internal State Dynamics},
+@misc{sachdev2026emergent,
+  author = {Sachdev, Garv},
+  title  = {Emergent Individuality in Neural Networks via 
+             Persistent Internal State Dynamics},
   year   = {2026},
-  note   = {Draft under review}
+  note   = {Preprint. Work in progress.}
 }
 ```
