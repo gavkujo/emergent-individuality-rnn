@@ -1,6 +1,6 @@
 # Emergent Individuality in Neural Networks via Persistent Internal State Dynamics
 
-> **Draft (under review)**
+> *Preprint — work in progress. Comments welcome.*
 
 Two recurrent networks, initialised identically, exposed to different sequences of experiences, develop measurably different internal dynamics. No explicit individuality objective. No different architectures. Just history.
 
