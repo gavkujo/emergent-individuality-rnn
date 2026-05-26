@@ -1,0 +1,84 @@
+{
+  "name": "baseline_comparison",
+  "description": "Fair comparison of LeakyRNN against Vanilla RNN, GRU, LSTM, and Frozen-reservoir ESN. All share the self-feedback loop and same hidden_dim. Measures idle richness (untrained and trained) and decoder accuracy on idle states across 4 training frequencies.",
+  "details": "First baseline sweep. Replaces the old single-GRU comparison from Stage 1 which was confounded by untrained-vs-trained measurement. Decoder-accuracy measurement is per-architecture: 4 models trained on freq in {1,2,4,8}, idle states pooled, linear classifier.",
+  "time": "2026-05-26T16:40:13",
+  "results": {
+    "architectures": {
+      "LeakyRNN": {
+        "untrained": {
+          "richness": 0.20857849717140198,
+          "activity": 0.17693276703357697,
+          "spectral_radius": 1.050001621246338
+        },
+        "trained": {
+          "richness": 0.3237760066986084,
+          "activity": 0.2976785898208618,
+          "spectral_radius": 1.1455087661743164
+        },
+        "decoder_acc": 1.0
+      },
+      "VanillaRNN": {
+        "untrained": {
+          "richness": 0.16939781606197357,
+          "activity": 0.14825734496116638,
+          "spectral_radius": 0.9500008225440979
+        },
+        "trained": {
+          "richness": 0.2974476218223572,
+          "activity": 0.27297356724739075,
+          "spectral_radius": 0.9647868871688843
+        },
+        "decoder_acc": 1.0
+      },
+      "GatedRNN": {
+        "untrained": {
+          "richness": 0.00407731207087636,
+          "activity": 0.049933575093746185,
+          "spectral_radius": 0.6359888315200806
+        },
+        "trained": {
+          "richness": 0.20616909861564636,
+          "activity": 0.19342432916164398,
+          "spectral_radius": 1.152298927307129
+        },
+        "decoder_acc": 1.0
+      },
+      "LSTM": {
+        "untrained": {
+          "richness": 0.0032736009452492,
+          "activity": 0.05180598422884941,
+          "spectral_radius": 0.5991138219833374
+        },
+        "trained": {
+          "richness": 0.33278799057006836,
+          "activity": 0.30358991026878357,
+          "spectral_radius": 1.0157490968704224
+        },
+        "decoder_acc": 1.0
+      },
+      "FrozenESN": {
+        "untrained": {
+          "richness": 0.016006365418434143,
+          "activity": 0.010756224393844604,
+          "spectral_radius": 0.9500008225440979
+        },
+        "trained": {
+          "richness": 0.26234346628189087,
+          "activity": 0.22822530567646027,
+          "spectral_radius": 0.9500008225440979
+        },
+        "decoder_acc": 1.0
+      }
+    },
+    "config": {
+      "hidden_dim": 128,
+      "input_dim": 16,
+      "output_dim": 16,
+      "train_steps": 300,
+      "idle_steps": 300,
+      "seed": 42,
+      "device": "mps"
+    }
+  }
+}
