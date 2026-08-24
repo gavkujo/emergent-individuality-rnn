@@ -157,9 +157,16 @@ def per_seed(seed: int, device, config: dict) -> dict:
     specs = sample_specs(config["task_family"], config["K"],
                          seed=config["task_sample_seed"])
 
+    try:
+        from tqdm.auto import tqdm  # type: ignore
+        spec_iter = tqdm(specs, unit="task", leave=False,
+                          desc=f"seed {seed} tasks")
+    except ImportError:
+        spec_iter = specs
+
     idle_states: dict[str, np.ndarray] = {}
     task_aux: dict[str, dict] = {}
-    for spec in specs:
+    for spec in spec_iter:
         states, aux = _train_one_task(seed, spec, device, config)
         idle_states[spec.label] = states
         task_aux[spec.label] = aux

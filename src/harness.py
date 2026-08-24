@@ -44,6 +44,12 @@ from typing import Callable, Optional
 
 import torch
 
+try:
+    from tqdm.auto import tqdm  # type: ignore
+    _HAVE_TQDM = True
+except ImportError:  # pragma: no cover - tqdm optional
+    _HAVE_TQDM = False
+
 from src.results_io import save_result
 
 
@@ -177,21 +183,43 @@ def run_seeded(name: str,
         print(f"[harness] {name} {version}: {n_seeds} seeds, "
               f"device={device}, checkpoints @ {ckpt_dir}")
 
-    for i, seed in enumerate(seeds, start=1):
+    use_bar = verbose and _HAVE_TQDM
+    seed_iter = seeds
+    bar = None
+    if use_bar:
+        bar = tqdm(total=n_seeds, unit="seed", dynamic_ncols=True,
+                   desc=f"{name}")
+        seed_iter = seeds  # tqdm updates manually inside the loop
+
+    def _log(msg: str) -> None:
+        if not verbose:
+            return
+        if bar is not None:
+            bar.write(msg)
+        else:
+            print(msg, flush=True)
+
+    for i, seed in enumerate(seed_iter, start=1):
         ck_path = _seed_ckpt_path(ckpt_dir, seed)
         cached = _load_seed_checkpoint(ck_path)
         if cached is not None:
             per_seed_results[seed] = cached["result"]
             per_seed_wallclock[seed] = float(cached.get("wallclock_s", 0.0))
             per_seed_status[seed] = "cached"
-            if verbose:
-                print(f"[harness]   ({i}/{n_seeds}) seed {seed}: "
-                      f"cached ({per_seed_wallclock[seed]:.1f}s)")
+            if bar is not None:
+                bar.set_postfix_str(f"seed {seed} cached "
+                                    f"({per_seed_wallclock[seed]:.1f}s)")
+                bar.update(1)
+            else:
+                _log(f"[harness]   ({i}/{n_seeds}) seed {seed}: "
+                     f"cached ({per_seed_wallclock[seed]:.1f}s)")
             continue
 
-        if verbose:
-            print(f"[harness]   ({i}/{n_seeds}) seed {seed}: running...",
-                  flush=True)
+        if bar is not None:
+            bar.set_postfix_str(f"seed {seed} running...")
+        else:
+            _log(f"[harness]   ({i}/{n_seeds}) seed {seed}: running...")
+
         t0 = time.time()
         result = per_seed_fn(seed, device, config)
         wall = time.time() - t0
@@ -225,9 +253,15 @@ def run_seeded(name: str,
             except Exception:
                 pass
 
-        if verbose:
-            print(f"[harness]   ({i}/{n_seeds}) seed {seed}: "
-                  f"done in {wall:.1f}s", flush=True)
+        if bar is not None:
+            bar.set_postfix_str(f"seed {seed} done in {wall:.1f}s")
+            bar.update(1)
+        else:
+            _log(f"[harness]   ({i}/{n_seeds}) seed {seed}: "
+                 f"done in {wall:.1f}s")
+
+    if bar is not None:
+        bar.close()
 
     t_run_end = time.time()
 
