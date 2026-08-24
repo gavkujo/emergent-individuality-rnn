@@ -21,11 +21,11 @@ from src.train import wake_phase, run_idle, make_sine_task, decoder_accuracy
 NAME = "baseline_comparison"
 DESCRIPTION = ("Fair architecture comparison: LeakyRNN vs VanillaRNN, GRU, "
                "LSTM, FrozenESN. Idle richness and 4-freq decoder accuracy.")
-DETAILS = ("First baseline sweep. Replaces the old single-GRU comparison from "
-           "Stage 1 which was confounded by untrained-vs-trained measurement. "
-           "Per-architecture: trained untrained models for richness, trained "
-           "4 separate models (one per freq in {1,2,4,8}) for decoder.")
-VERSION = "v1"
+DETAILS = ("v2: decoder_accuracy switched from in-sample lstsq to held-out "
+           "5-fold ridge CV (returns dict with mean, std, in_sample, "
+           "ridge_lambda). The previous v1 numbers (1.000 across all "
+           "architectures) were classifier capacity, not network encoding.")
+VERSION = "v2"
 
 INPUT_DIM, HIDDEN_DIM, OUTPUT_DIM = 16, 128, 16
 TRAIN_STEPS, IDLE_STEPS = 300, 300
@@ -91,13 +91,14 @@ def run(device) -> dict:
               f"SR={trained['spectral_radius']:.3f}")
 
         print("  decoder accuracy on idle states (4 freqs)...")
-        acc = _measure_decoder(ctor, device)
-        print(f"  decoder acc: {acc:.3f}")
+        dec = _measure_decoder(ctor, device)
+        print(f"  decoder acc: {dec['mean']:.3f} ± {dec['std']:.3f} "
+              f"(in-sample {dec['in_sample']:.3f})")
 
         out["architectures"][name] = {
             "untrained": untrained,
             "trained": trained,
-            "decoder_acc": acc,
+            "decoder": dec,
         }
 
     return out

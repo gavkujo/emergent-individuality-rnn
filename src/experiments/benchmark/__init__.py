@@ -22,9 +22,13 @@ NAME = "benchmark"
 DESCRIPTION = ("Full B1-B6 benchmark for LeakyRNN: idle richness, decoder "
                "accuracy, divergence accumulation, path-dependence, sleep effect, "
                "order effect.")
-DETAILS = ("v2: replaces the inflated 'GRU 50,000x' framing of B1 with a clean "
-           "LeakyRNN tau/SR sweep; cross-architecture moved to baselines.py.")
-VERSION = "v2"
+DETAILS = ("v4: subspace_angle default changed from n=3 to n=2, based on the "
+           "subspace_dim experiment (findings/week34_2026/02): idle limit "
+           "cycles are 2D at 99% variance in every measured config, so n=3 "
+           "was measuring against a noise dimension. B3, B4, B5, B6 numbers "
+           "will change from v3. v3 (2026-06): decoder_accuracy switched to "
+           "5-fold ridge CV, closed the in-sample bug.")
+VERSION = "v4"
 
 INPUT_DIM, HIDDEN_DIM, OUTPUT_DIM = 16, 128, 16
 TAU, SR_INIT = 5.0, 0.95
@@ -78,8 +82,9 @@ def run(device) -> dict:
         m = _make(device)
         wake_phase(m, *make_sine_task(freq, device=device), steps=300)
         single_states[freq] = run_idle(m, device=device)
-    acc_single = decoder_accuracy(single_states)
-    print(f"  Single task: {acc_single:.3f}")
+    dec_single = decoder_accuracy(single_states)
+    print(f"  Single task: {dec_single['mean']:.3f} ± {dec_single['std']:.3f} "
+          f"(in-sample {dec_single['in_sample']:.3f})")
 
     stream_states = {}
     for name, stream in [("A_low", STREAM_A), ("B_high", STREAM_B),
@@ -87,11 +92,12 @@ def run(device) -> dict:
         print(f"  Running stream {name}...", flush=True)
         m = _make(device)
         stream_states[name] = _run_stream(m, stream, device)[-1]
-    acc_streams = decoder_accuracy(stream_states)
-    print(f"  4-stream: {acc_streams:.3f}")
-    out["b2_decoder"] = {"single_task_acc": acc_single,
-                         "four_stream_acc": acc_streams,
-                         "chance_single": 0.25, "chance_streams": 0.25}
+    dec_streams = decoder_accuracy(stream_states)
+    print(f"  4-stream:    {dec_streams['mean']:.3f} ± {dec_streams['std']:.3f} "
+          f"(in-sample {dec_streams['in_sample']:.3f})")
+    out["b2_decoder"] = {"single_task": dec_single,
+                         "four_stream": dec_streams,
+                         "chance": 1.0 / dec_single["n_classes"]}
 
     # B3
     print("\nB3: Divergence accumulation...")

@@ -1,0 +1,167 @@
+{
+  "name": "benchmark",
+  "description": "Full B1-B6 benchmark for LeakyRNN: idle richness, decoder accuracy, divergence accumulation, path-dependence, sleep effect, order effect.",
+  "details": "v3: decoder_accuracy switched from in-sample lstsq to held-out 5-fold ridge CV (returns dict with mean, std, in_sample, ridge_lambda); B2 result now reports both held-out and in-sample for direct comparison. Closes the most critical hardening item.",
+  "time": "2026-06-09T17:53:57",
+  "results": {
+    "b1_idle_richness_leaky": {
+      "tau2.0_sr0.9": {
+        "tau": 2.0,
+        "sr": 0.9,
+        "richness": 0.26229530572891235,
+        "activity": 0.24373169243335724
+      },
+      "tau2.0_sr0.95": {
+        "tau": 2.0,
+        "sr": 0.95,
+        "richness": 0.2453530728816986,
+        "activity": 0.22868454456329346
+      },
+      "tau2.0_sr1.05": {
+        "tau": 2.0,
+        "sr": 1.05,
+        "richness": 0.323786199092865,
+        "activity": 0.29768821597099304
+      },
+      "tau5.0_sr0.9": {
+        "tau": 5.0,
+        "sr": 0.9,
+        "richness": 0.2391865998506546,
+        "activity": 0.22520345449447632
+      },
+      "tau5.0_sr0.95": {
+        "tau": 5.0,
+        "sr": 0.95,
+        "richness": 0.25358816981315613,
+        "activity": 0.23863838613033295
+      },
+      "tau5.0_sr1.05": {
+        "tau": 5.0,
+        "sr": 1.05,
+        "richness": 0.30141681432724,
+        "activity": 0.27767542004585266
+      },
+      "tau10.0_sr0.9": {
+        "tau": 10.0,
+        "sr": 0.9,
+        "richness": 0.14672811329364777,
+        "activity": 0.14336006343364716
+      },
+      "tau10.0_sr0.95": {
+        "tau": 10.0,
+        "sr": 0.95,
+        "richness": 0.17469415068626404,
+        "activity": 0.1635868400335312
+      },
+      "tau10.0_sr1.05": {
+        "tau": 10.0,
+        "sr": 1.05,
+        "richness": 0.1780223697423935,
+        "activity": 0.1678352952003479
+      }
+    },
+    "b2_decoder": {
+      "single_task": {
+        "mean": 1.0,
+        "std": 0.0,
+        "in_sample": 1.0,
+        "n_splits": 5,
+        "n_classes": 4,
+        "n_per_class": 150,
+        "ridge_lambda": 1.0
+      },
+      "four_stream": {
+        "mean": 1.0,
+        "std": 0.0,
+        "in_sample": 1.0,
+        "n_splits": 5,
+        "n_classes": 4,
+        "n_per_class": 150,
+        "ridge_lambda": 1.0
+      },
+      "chance": 0.25
+    },
+    "b3_accumulation": [
+      {
+        "cycle": 1,
+        "freq_a": 1.0,
+        "freq_b": 8.0,
+        "subspace_angle": 54.46860122680664,
+        "l2": 4.430453777313232
+      },
+      {
+        "cycle": 2,
+        "freq_a": 1.5,
+        "freq_b": 12.0,
+        "subspace_angle": 69.23341369628906,
+        "l2": 4.893585205078125
+      },
+      {
+        "cycle": 3,
+        "freq_a": 2.0,
+        "freq_b": 6.0,
+        "subspace_angle": 62.181114196777344,
+        "l2": 4.769161701202393
+      },
+      {
+        "cycle": 4,
+        "freq_a": 1.0,
+        "freq_b": 8.0,
+        "subspace_angle": 62.66878128051758,
+        "l2": 4.380577564239502
+      },
+      {
+        "cycle": 5,
+        "freq_a": 2.0,
+        "freq_b": 6.0,
+        "subspace_angle": 62.17023849487305,
+        "l2": 4.4053192138671875
+      }
+    ],
+    "b4_path_dependence": [
+      {
+        "length": 1,
+        "angle": 59.89087677001953
+      },
+      {
+        "length": 2,
+        "angle": 53.41103744506836
+      },
+      {
+        "length": 3,
+        "angle": 60.88491439819336
+      },
+      {
+        "length": 5,
+        "angle": 62.0237922668457
+      },
+      {
+        "length": 7,
+        "angle": 67.1220474243164
+      },
+      {
+        "length": 10,
+        "angle": 61.9415168762207
+      }
+    ],
+    "b5_sleep_effect": {
+      "with_sleep": {
+        "angle": 62.17023849487305,
+        "l2": 4.4053192138671875
+      },
+      "without_sleep": {
+        "angle": 67.8375244140625,
+        "l2": 3.990319013595581
+      }
+    },
+    "b6_order_effect": {
+      "same_tasks_reversed": {
+        "angle": 55.25153350830078
+      },
+      "different_tasks": {
+        "angle": 64.64666748046875
+      },
+      "order_fraction": 0.8546694773554034
+    }
+  }
+}

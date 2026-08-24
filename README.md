@@ -16,12 +16,11 @@ src/
   baselines.py    : VanillaRNN, GatedRNN (GRU), LSTM, FrozenESN
   train.py        : wake/sleep training loop, idle measurement, divergence metrics
   results_io.py   : save_result + load_latest helpers (week-organised)
-  experiments/    : one module per experiment, auto-discovered by run.py
+  experiments/    : one folder per experiment, auto-discovered by run.py
 
 run.py            : single entry point; dispatches to src/experiments/<name>
 results/          : <name>_<YYYYMMDD>_<version>.json files in week<NN>_<YYYY>/
 findings/         : working notes referencing results, in week<NN>_<YYYY>/
-figures/          : generated PNGs
 paper.pdf         : full draft paper
 requirements.txt
 ```
@@ -34,12 +33,12 @@ pip install -r requirements.txt
 python run.py --list           # show available experiments
 python run.py benchmark        # run the full B1-B6 suite
 python run.py baselines        # run the architecture comparison
-python run.py figures          # regenerate all figures from latest results
 ```
 
 ## Adding an experiment
 
-Drop a new module at `src/experiments/<your_name>.py` exposing:
+Each experiment lives in its own folder at `src/experiments/<your_name>/`.
+The folder must expose a package interface in `__init__.py` with:
 
 ```python
 NAME        = "your_name"
@@ -52,13 +51,20 @@ def run(device):
     return results_dict   # or None if nothing to save
 ```
 
-`run.py` auto-discovers it. Results land in `results/week<NN>_<YYYY>/your_name_<date>_v1.json`.
+`run.py` auto-discovers it. Results land in
+`results/week<NN>_<YYYY>/your_name_<date>_v1.json`.
+
+Any figures the experiment generates live in the same folder (e.g.
+`src/experiments/<your_name>/figures.py`) and write PNGs to a sibling
+`figures/` subdirectory or directly into the experiment folder. Do not
+add a top-level cross-experiment figure script — figures are owned by
+the experiment that produces the data they depend on.
 
 ## Conventions
 
 - Every experiment writes a JSON via `src.results_io.save_result` with mandatory `name`, `description`, `details`, `time` (ISO-8601 second precision), and `results` keys.
 - Results and findings are both organised by ISO week so they line up.
-- `load_latest("benchmark")` returns the most recently dated result across all weeks — consumer scripts (figures, downstream experiments) keep working when the week rolls over.
+- `load_latest("benchmark")` returns the most recently dated result across all weeks — consumer scripts (per-experiment figures, downstream experiments) keep working when the week rolls over.
 
 ---
 

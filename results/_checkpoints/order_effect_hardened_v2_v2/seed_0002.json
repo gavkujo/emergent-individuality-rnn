@@ -1,0 +1,182 @@
+{
+  "name": "order_effect_hardened_v2",
+  "version": "v2",
+  "seed": 2,
+  "config": {
+    "hidden_dim": 256,
+    "input_dim": 16,
+    "output_dim": 16,
+    "tau": 5.0,
+    "target_sr": 0.95,
+    "alpha": 0.8,
+    "task_family": "sine",
+    "stream_length": 5,
+    "wake_steps": 200,
+    "wake_T": 200,
+    "wake_batch": 4,
+    "wake_lr": 0.003,
+    "wake_ach": 1.0,
+    "sleep_steps": 600,
+    "eta": 0.01,
+    "decay": 0.001,
+    "sleep_ach": 0.3,
+    "grad_clip": 1.0,
+    "idle_steps": 400,
+    "bootstrap_resamples": 2000,
+    "bootstrap_ci": 0.95,
+    "n_seeds": 30,
+    "base_freqs_seed_offset": 300000,
+    "unrelated_freqs_seed_offset": 400000,
+    "perm_A_seed_offset": 500000,
+    "perm_B_seed_offset": 600000,
+    "perm_T_seed_offset": 700000
+  },
+  "environment": {
+    "python": "3.13.13",
+    "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "torch": "2.12.0",
+    "device": "mps",
+    "backend": "MPS (Apple Silicon)"
+  },
+  "time": "2026-08-24T09:50:36",
+  "wallclock_s": 241.941636800766,
+  "result": {
+    "stream_A": [
+      {
+        "family": "sine",
+        "params": {
+          "freq": 9.938892479796866
+        },
+        "label": "sine_9.94Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 6.720593145608501
+        },
+        "label": "sine_6.72Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.023456972219779
+        },
+        "label": "sine_1.02Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.7026625247542537
+        },
+        "label": "sine_1.70Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 3.919353479165903
+        },
+        "label": "sine_3.92Hz"
+      }
+    ],
+    "stream_B": [
+      {
+        "family": "sine",
+        "params": {
+          "freq": 3.919353479165903
+        },
+        "label": "sine_3.92Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 9.938892479796866
+        },
+        "label": "sine_9.94Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 6.720593145608501
+        },
+        "label": "sine_6.72Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.023456972219779
+        },
+        "label": "sine_1.02Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.7026625247542537
+        },
+        "label": "sine_1.70Hz"
+      }
+    ],
+    "stream_T": [
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.083177915259699
+        },
+        "label": "sine_1.08Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 0.779443684725582
+        },
+        "label": "sine_0.78Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 4.449572327196564
+        },
+        "label": "sine_4.45Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 6.6444214721420245
+        },
+        "label": "sine_6.64Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 11.434019278127266
+        },
+        "label": "sine_11.43Hz"
+      }
+    ],
+    "last_freqs": {
+      "A": 3.919353479165903,
+      "B": 1.7026625247542537,
+      "T": 11.434019278127266,
+      "gap_AB_log": 0.8337334945199091,
+      "gap_AT_log": 1.070666347459712
+    },
+    "distances": {
+      "angle_n2_A_vs_B": 70.28241729736328,
+      "angle_n2_A_vs_T": 61.364036560058594,
+      "angle_n3_A_vs_B": 74.52725982666016,
+      "angle_n3_A_vs_T": 64.32769775390625,
+      "l2_A_vs_B": 7.639193058013916,
+      "l2_A_vs_T": 5.249212265014648
+    },
+    "ratios": {
+      "angle_n2": 1.145335627140109,
+      "angle_n3": 1.158556305120286,
+      "l2": 1.4553027525535964
+    },
+    "sleep_diagnostics": {
+      "A_final_sr": 5.096468925476074,
+      "B_final_sr": 5.2805891036987305,
+      "T_final_sr": 4.022455215454102
+    }
+  }
+}

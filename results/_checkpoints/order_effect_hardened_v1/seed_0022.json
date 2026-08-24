@@ -1,0 +1,138 @@
+{
+  "name": "order_effect_hardened",
+  "version": "v1",
+  "seed": 22,
+  "config": {
+    "hidden_dim": 256,
+    "input_dim": 16,
+    "output_dim": 16,
+    "tau": 5.0,
+    "target_sr": 0.95,
+    "alpha": 0.8,
+    "task_family": "sine",
+    "stream_length": 5,
+    "wake_steps": 200,
+    "wake_T": 200,
+    "wake_batch": 4,
+    "wake_lr": 0.003,
+    "wake_ach": 1.0,
+    "sleep_steps": 600,
+    "eta": 0.01,
+    "decay": 0.001,
+    "sleep_ach": 0.3,
+    "grad_clip": 1.0,
+    "idle_steps": 400,
+    "bootstrap_resamples": 2000,
+    "bootstrap_ci": 0.95,
+    "n_seeds": 30,
+    "forward_stream_seed_offset": 100000,
+    "unrelated_stream_seed_offset": 200000
+  },
+  "environment": {
+    "python": "3.13.13",
+    "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "torch": "2.12.0",
+    "device": "mps",
+    "backend": "MPS (Apple Silicon)"
+  },
+  "time": "2026-08-24T02:09:24",
+  "wallclock_s": 794.8468399047852,
+  "result": {
+    "stream_fwd": [
+      {
+        "family": "sine",
+        "params": {
+          "freq": 0.6500833023625078
+        },
+        "label": "sine_0.65Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.5143423802097666
+        },
+        "label": "sine_1.51Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 4.269591222724036
+        },
+        "label": "sine_4.27Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 9.522741473739675
+        },
+        "label": "sine_9.52Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 15.316667588877191
+        },
+        "label": "sine_15.32Hz"
+      }
+    ],
+    "stream_unrelated": [
+      {
+        "family": "sine",
+        "params": {
+          "freq": 0.5529100521457416
+        },
+        "label": "sine_0.55Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.774971537560551
+        },
+        "label": "sine_1.77Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 2.760808153767506
+        },
+        "label": "sine_2.76Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 5.837936046861939
+        },
+        "label": "sine_5.84Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 13.851359704649363
+        },
+        "label": "sine_13.85Hz"
+      }
+    ],
+    "distances": {
+      "angle_n2_fwd_vs_rev": 76.08261108398438,
+      "angle_n2_fwd_vs_unr": 39.866615295410156,
+      "angle_n3_fwd_vs_rev": 78.77483367919922,
+      "angle_n3_fwd_vs_unr": 39.56057357788086,
+      "l2_fwd_vs_rev": 8.143670082092285,
+      "l2_fwd_vs_unr": 3.1158275604248047
+    },
+    "ratios": {
+      "angle_n2": 1.908429158588333,
+      "angle_n3": 1.9912459945536247,
+      "l2": 2.6136459493226885
+    },
+    "sleep_diagnostics": {
+      "fwd_final_sr": 5.598635196685791,
+      "rev_final_sr": 6.1038055419921875,
+      "unr_final_sr": 4.622439384460449,
+      "fwd_any_reverted": false,
+      "rev_any_reverted": false,
+      "unr_any_reverted": false
+    }
+  }
+}

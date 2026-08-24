@@ -1,0 +1,197 @@
+{
+  "name": "order_effect_anchored",
+  "version": "v1",
+  "seed": 13,
+  "config": {
+    "hidden_dim": 256,
+    "input_dim": 16,
+    "output_dim": 16,
+    "tau": 5.0,
+    "target_sr": 0.95,
+    "alpha": 0.8,
+    "task_family": "sine",
+    "stream_length": 5,
+    "freq_log_lo": 0.5,
+    "freq_log_hi": 20.0,
+    "wake_steps": 200,
+    "wake_T": 200,
+    "wake_batch": 4,
+    "wake_lr": 0.003,
+    "wake_ach": 1.0,
+    "sleep_steps": 600,
+    "eta": 0.01,
+    "decay": 0.001,
+    "sleep_ach": 0.3,
+    "grad_clip": 1.0,
+    "idle_steps": 400,
+    "bootstrap_resamples": 2000,
+    "bootstrap_ci": 0.95,
+    "n_seeds": 30,
+    "base_freqs_offset": 800000,
+    "alt_freqs_offset": 900000,
+    "anchor_freq_offset": 1000000,
+    "perm_A_offset": 1100000,
+    "perm_B_offset": 1200000
+  },
+  "environment": {
+    "python": "3.13.13",
+    "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "torch": "2.12.0",
+    "device": "mps",
+    "backend": "MPS (Apple Silicon)"
+  },
+  "time": "2026-08-24T15:03:10",
+  "wallclock_s": 242.62702894210815,
+  "result": {
+    "anchor_freq": 1.5448374200437938,
+    "base_freqs": [
+      18.39511745614986,
+      4.717780392451847,
+      2.6492930372422783,
+      0.9217803980455882
+    ],
+    "alt_freqs": [
+      18.30073857303365,
+      18.127539223661756,
+      1.2738883228512152,
+      6.805654338653724
+    ],
+    "perm_A": [
+      0,
+      3,
+      2,
+      1
+    ],
+    "perm_B": [
+      1,
+      3,
+      2,
+      0
+    ],
+    "stream_A": [
+      {
+        "family": "sine",
+        "params": {
+          "freq": 18.39511745614986
+        },
+        "label": "sine_18.40Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 0.9217803980455882
+        },
+        "label": "sine_0.92Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 2.6492930372422783
+        },
+        "label": "sine_2.65Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 4.717780392451847
+        },
+        "label": "sine_4.72Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.5448374200437938
+        },
+        "label": "sine_1.54Hz"
+      }
+    ],
+    "stream_B": [
+      {
+        "family": "sine",
+        "params": {
+          "freq": 4.717780392451847
+        },
+        "label": "sine_4.72Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 0.9217803980455882
+        },
+        "label": "sine_0.92Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 2.6492930372422783
+        },
+        "label": "sine_2.65Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 18.39511745614986
+        },
+        "label": "sine_18.40Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.5448374200437938
+        },
+        "label": "sine_1.54Hz"
+      }
+    ],
+    "stream_T": [
+      {
+        "family": "sine",
+        "params": {
+          "freq": 18.30073857303365
+        },
+        "label": "sine_18.30Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 6.805654338653724
+        },
+        "label": "sine_6.81Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.2738883228512152
+        },
+        "label": "sine_1.27Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 18.127539223661756
+        },
+        "label": "sine_18.13Hz"
+      },
+      {
+        "family": "sine",
+        "params": {
+          "freq": 1.5448374200437938
+        },
+        "label": "sine_1.54Hz"
+      }
+    ],
+    "distances": {
+      "angle_n2_A_vs_B_middle_order": 85.4686508178711,
+      "angle_n2_A_vs_T_middle_content": 76.17910766601562,
+      "angle_n3_A_vs_B_middle_order": 82.16358947753906,
+      "angle_n3_A_vs_T_middle_content": 76.8285140991211,
+      "l2_A_vs_B_middle_order": 10.255023002624512,
+      "l2_A_vs_T_middle_content": 10.286282539367676
+    },
+    "ratios_order_over_content": {
+      "angle_n2": 1.1219434492798561,
+      "angle_n3": 1.0694413453257063,
+      "l2": 0.9969610462649138
+    }
+  }
+}
